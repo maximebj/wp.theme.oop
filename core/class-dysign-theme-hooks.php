@@ -39,6 +39,11 @@ class Dysign_Theme_Hooks {
     //add_filter('upload_mimes', array($this, 'allow_mime_types'));
     //add_action('admin_enqueue_scripts', array($this, 'admin_theme_style'));
 
+
+    // Others
+
+    add_filter('xmlrpc_enabled', '__return_false'); // Remove XML RPC
+
   }
 
 
