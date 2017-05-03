@@ -1,8 +1,5 @@
 <?php
 
-define('MAINTENANCE', false);
-define('DISALLOW_FILE_EDIT', true);
-
 // Hooks
 include get_template_directory().'/core/class-dysign-theme-hooks.php';
 $dysign_theme_hooks = new Dysign_Theme_Hooks();
