@@ -20,6 +20,7 @@ class Dysign_Theme_Hooks {
     add_action('init', array($this, 'change_author_permalinks'));
 
 
+    //add_filter( 'gform_init_scripts_footer', '__return_true' );
     //add_action('widgets_init', array($this, 'register_sidebars'));
     //add_filter('excerpt_length', array($this, 'set_excerpt_length'));
     //add_filter('excerpt_more', array($this, 'set_excerpt_suffixe'));
@@ -34,7 +35,7 @@ class Dysign_Theme_Hooks {
     add_action('wp_dashboard_setup', array($this, 'add_dashboard_dysign_widget'), 1 );
     add_filter('admin_footer_text', array($this, 'change_footer'));
     add_filter('sanitize_file_name', 'remove_accents');
-
+    remove_action('welcome_panel', 'wp_welcome_panel');
 
     //add_action('admin_menu', array($this, 'remove_menu_pages'));
     //add_filter('upload_mimes', array($this, 'allow_mime_types'));
@@ -115,9 +116,20 @@ class Dysign_Theme_Hooks {
     // RSS
     add_theme_support('automatic-feed-links');
 
+<<<<<<< HEAD
+    // Remove post format
+    remove_theme_support('post-formats');
+  }
+
+  public function register_scripts() {
+
+    wp_deregister_script( 'jquery' );
+    wp_enqueue_script( 'jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js', false, '3.0.0', true);
+=======
   }
 
   private function register_assets() {
+>>>>>>> 03cdda739bf73e44636f3d24faa8cfdffb944bb3
 
     wp_deregister_script( 'jquery' );
     wp_register_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', false, '3.2.1', true);
@@ -164,6 +176,12 @@ class Dysign_Theme_Hooks {
   private function customize_tinymce($init) {
     // Keep only useful styles
     $init['block_formats'] = 'Paragraphe=p;Titre 2=h2;Titre 3=h3;Titre 4=h4';
+<<<<<<< HEAD
+
+    // Force second line toolbar
+    $init['wordpress_adv_hidden'] = FALSE;
+=======
+>>>>>>> 03cdda739bf73e44636f3d24faa8cfdffb944bb3
 
     return $init;
   }
