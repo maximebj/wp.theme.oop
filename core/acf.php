@@ -18,7 +18,7 @@ class Dysign_Theme_ACF {
 
   }
 
-  function disallow_acf_deactivation($actions, $plugin_file, $plugin_data, $context) {
+  public function disallow_acf_deactivation($actions, $plugin_file, $plugin_data, $context) {
     if (array_key_exists('deactivate', $actions) and $plugin_file == self::ACF) {
       unset( $actions['deactivate'] );
     }

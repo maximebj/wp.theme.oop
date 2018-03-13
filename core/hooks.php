@@ -7,7 +7,7 @@ class Dysign_Theme_Hooks {
     $this->clean_wp();
   }
 
-  private function register_hooks() {
+  public function register_hooks() {
 
     if(defined('MAINTENANCE') and MAINTENANCE) {
       add_action('get_header', array($this, 'activate_maintenance'));
@@ -18,7 +18,6 @@ class Dysign_Theme_Hooks {
     add_action('after_setup_theme', array($this, 'theme_setup'));
     add_action('wp_enqueue_scripts', array($this, 'register_assets'));
     add_action('init', array($this, 'change_author_permalinks'));
-    add_action('init', array($this, 'disable_wp_emojicons'));
 
     //add_action('widgets_init', array($this, 'register_sidebars'));
     //add_filter('excerpt_length', array($this, 'set_excerpt_length'));
@@ -43,7 +42,7 @@ class Dysign_Theme_Hooks {
   }
 
 
-  private function clean_wp() {
+  public function clean_wp() {
 
     // Remove XML RPC
     add_filter('xmlrpc_enabled', '__return_false');
@@ -81,7 +80,7 @@ class Dysign_Theme_Hooks {
   /*  = Main config =  */
   /*  ===============  */
 
-  private function theme_setup() {
+  public function theme_setup() {
 
     // Text Domain
     load_theme_textdomain('dysign', get_template_directory() . '/languages');
@@ -117,7 +116,7 @@ class Dysign_Theme_Hooks {
 
   }
 
-  private function register_assets() {
+  public function register_assets() {
 
     wp_deregister_script( 'jquery' );
     wp_register_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js', false, '3.2.1', true);
@@ -127,12 +126,12 @@ class Dysign_Theme_Hooks {
     wp_enqueue_script('theme-js');
   }
 
-  private function change_author_permalinks() {
+  public function change_author_permalinks() {
     global $wp_rewrite;
     $wp_rewrite->author_base = 'auteur';
   }
 
-  private function register_sidebars() {
+  public function register_sidebars() {
     register_sidebar(array(
       'name' =>'Blog',
       'before_widget'  => '<div class="widget %2$s">',
@@ -142,15 +141,15 @@ class Dysign_Theme_Hooks {
     ));
   }
 
-  private function set_excerpt_length($length) {
+  public function set_excerpt_length($length) {
     return 20;
   }
 
-  private function set_excerpt_suffixe($more) {
+  public function set_excerpt_suffixe($more) {
     return '…';
   }
 
-  private function dequeue_scripts() {
+  public function dequeue_scripts() {
     //wp_dequeue_script('');
     //wp_dequeue_syle('');
   }
@@ -161,26 +160,26 @@ class Dysign_Theme_Hooks {
   /*  = Admin Functions =  */
   /*  ===================  */
 
-  private function customize_tinymce($init) {
+  public function customize_tinymce($init) {
     // Keep only useful styles
     $init['block_formats'] = 'Paragraphe=p;Titre 2=h2;Titre 3=h3;Titre 4=h4';
 
     return $init;
   }
 
-  private function remove_meta_boxes() {
+  public function remove_meta_boxes() {
     remove_meta_box('dashboard_primary', 'dashboard', 'normal'); // WP News
   }
 
-  private function disable_emojicons_tinymce($plugins) {
+  public function disable_emojicons_tinymce($plugins) {
     return (is_array($plugins)) ? array_diff($plugins, array('wpemoji')) : array();
   }
 
-  private function add_dashboard_dysign_widget() {
+  public function add_dashboard_dysign_widget() {
     wp_add_dashboard_widget('dysign_dashboard_widget', 'Dysign', array($this, 'dysign_dashboard_widget_function'));
   }
 
-  private function dysign_dashboard_widget_function($post, $callback_args) {
+  public function dysign_dashboard_widget_function($post, $callback_args) {
 
     $html = '
       <p>Votre site est géré par <strong>Maxime BERNARD-JACQUET</strong>.</p>
@@ -193,13 +192,13 @@ class Dysign_Theme_Hooks {
     echo $html;
   }
 
-  private function change_footer() {
+  public function change_footer() {
     $html = 'Crée par <a href="http://www.dysign.fr/" target="_blank">Dysign</a>, propulsé par <a href="http://wordpress.org" target="_blank">WordPress</a>';
 
     echo $html;
   }
 
-  private function remove_menu_pages() {
+  public function remove_menu_pages() {
     $current_user = wp_get_current_user();
 
     if($current_user->ID != 1) {
@@ -220,12 +219,12 @@ class Dysign_Theme_Hooks {
     }
   }
 
-  private function allow_mime_types($mimes){
+  public function allow_mime_types($mimes){
     $mimes['svg'] = 'image/svg+xml';
     return $mimes;
   }
 
-  private function admin_theme_style() {
+  public function admin_theme_style() {
     wp_enqueue_style('custom-admin', get_template_directory_uri().'/css/admin.css');
   }
 
@@ -235,7 +234,7 @@ class Dysign_Theme_Hooks {
   /*  = Global Functions =  */
   /*  ====================  */
 
-  private function activate_maintenance() {
+  public function activate_maintenance() {
     if ( !current_user_can('edit_themes') || !is_user_logged_in() ) {
       wp_die('Site en maintenance.');
     }
