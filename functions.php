@@ -1,36 +1,58 @@
 <?php
 
-// Hooks
-include get_template_directory().'/core/hooks.php';
-$dysign_theme_hooks = new Dysign_Theme_Hooks();
-$dysign_theme_hooks->execute();
+namespace DysignTheme;
 
-// Post Types
-include get_template_directory().'/core/cpt.php';
-$dysign_theme_cpt = new Dysign_Theme_CPT();
-$dysign_theme_cpt->execute();
+use DysignTheme\Core\Config;
+use DysignTheme\Core\CPT;
+use DysignTheme\Core\Features;
+use DysignTheme\Core\ACF;
+use DysignTheme\Core\Ajax;
+use DysignTheme\Core\Plugins;
+use DysignTheme\Core\API;
 
-// Theme features
-include get_template_directory().'/core/features.php';
-$dysign_theme_features = new Dysign_Theme_Features();
-$dysign_theme_features->execute();
+class DysignTheme {
 
-// ACF
-include get_template_directory().'/core/acf.php';
-$dysign_theme_acf = new Dysign_Theme_ACF();
-$dysign_theme_acf->execute();
+  public function run() {
 
-// Ajax
-include get_template_directory().'/core/ajax.php';
-$dysign_theme_ajax = new Dysign_Theme_Ajax();
-$dysign_theme_ajax->execute();
+    // Includes
+    include get_template_directory().'/core/config.php';
+    include get_template_directory().'/core/cpt.php';
+    include get_template_directory().'/core/features.php';
+    include get_template_directory().'/core/acf.php';
+    include get_template_directory().'/core/ajax.php';
+    include get_template_directory().'/core/plugins.php';
+    include get_template_directory().'/core/api.php';
 
-// Plugins
-include get_template_directory().'/core/plugins.php';
-$dysign_theme_plugins = new Dysign_Theme_Plugins();
-$dysign_theme_plugins->execute();
+    // Hooks
+    $hooks = new Config();
+    $hooks->execute();
 
-// WP API
-include get_template_directory().'/core/api.php';
-$dysign_theme_api = new Dysign_Theme_API();
-$dysign_theme_api->execute();
+    // Post Types
+    $cpt = new CPT();
+    $cpt->execute();
+
+    // Theme features
+    $features = new Features();
+    $features->execute();
+
+    // ACF
+    $acf = new ACF();
+    $acf->execute();
+
+    // Ajax
+    $ajax = new Ajax();
+    $ajax->execute();
+
+    // Plugins
+    $plugins = new Plugins();
+    $plugins->execute();
+
+    // WP API
+    $api = new API();
+    $api->execute();
+
+  }
+}
+
+$dysigntheme = new DysignTheme();
+$dysigntheme->run();
