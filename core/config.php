@@ -34,7 +34,6 @@ class Config {
     add_filter( 'admin_footer_text', array( $this, 'change_footer' ) );
     add_filter( 'sanitize_file_name', 'remove_accents' );
 
-
     //add_action( 'admin_menu', array( $this, 'remove_menu_pages' ) );
     //add_filter( 'upload_mimes', array( $this, 'allow_mime_types' ) );
     //add_action( 'admin_enqueue_scripts', array( $this, 'admin_theme_style' ) );
@@ -69,7 +68,6 @@ class Config {
     remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
     remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
     remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
-
   }
 
 
@@ -101,11 +99,11 @@ class Config {
     add_editor_style( array( 'css/editor-style.css' ) );
 
     // Enable HTML5
-    add_theme_support('html5', array(
+    add_theme_support( 'html5', array(
       'search-form',
       'comment-form',
       'comment-list',
-    ));
+    ) );
 
     // RSS
     add_theme_support( 'automatic-feed-links' );
@@ -132,7 +130,7 @@ class Config {
 
   public function register_sidebars() {
     register_sidebar(array(
-      'name' =>'Blog',
+      'name' => 'Blog',
       'before_widget'  => '<div class="widget %2$s">',
       'after_widget'  => '</div>',
       'before_title' => '<p>',
@@ -160,18 +158,18 @@ class Config {
   /*  ===================  */
 
   public function remove_meta_boxes() {
-    remove_meta_box('dashboard_primary', 'dashboard', 'normal' ); // WP News
+    remove_meta_box( 'dashboard_primary', 'dashboard', 'normal' ); // WP News
   }
 
   public function add_dashboard_dysign_widget() {
-    wp_add_dashboard_widget('dysign_dashboard_widget', 'Dysign', array( $this, 'dysign_dashboard_widget_function' ) );
+    wp_add_dashboard_widget( 'dysign_dashboard_widget', 'Dysign', array( $this, 'dysign_dashboard_widget_function' ) );
   }
 
-  public function dysign_dashboard_widget_function($post, $callback_args) {
+  public function dysign_dashboard_widget_function( $post, $callback_args ) {
 
     $html = '
       <p>Votre site est géré par <strong>Maxime BERNARD-JACQUET</strong>.</p>
-      <p style="text-align: center"><a href="http://dysign.fr"><img src="'.get_bloginfo('template_url').'/img/dysign.png" style="width:150px"></a></p>
+      <p style="text-align: center"><a href="http://dysign.fr"><img src="' . get_bloginfo('template_url') . '/img/dysign.png" style="width:150px"></a></p>
       <p><strong>Me contacter :</strong>
       <p>Maxime BERNARD-JACQUET<br>
       06 74 14 03 49<br>
@@ -189,21 +187,21 @@ class Config {
   public function remove_menu_pages() {
     $current_user = wp_get_current_user();
 
-    if($current_user->ID != 1) {
+    if( $current_user->ID != 1 ) {
 
-      remove_menu_page('tools.php' );
-      remove_menu_page('edit-comments.php' );
+      remove_menu_page( 'tools.php' );
+      remove_menu_page( 'edit-comments.php' );
 
-      remove_submenu_page('themes.php', 'widgets.php' );
-      remove_submenu_page('themes.php', 'theme-editor.php' );
+      remove_submenu_page( 'themes.php', 'widgets.php' );
+      remove_submenu_page( 'themes.php', 'theme-editor.php' );
 
-      remove_menu_page('users.php' );
+      remove_menu_page( 'users.php' );
 
-      remove_menu_page('wpcf7' ); // Contact form 7
-      remove_menu_page('gf_edit_forms' ); // gravity forms
-      remove_menu_page('wpseo_dashboard' ); // SEO by Yoast
+      remove_menu_page( 'wpcf7' ); // Contact form 7
+      remove_menu_page( 'gf_edit_forms' ); // gravity forms
+      remove_menu_page( 'wpseo_dashboard' ); // SEO by Yoast
 
-      remove_menu_page('edit.php?post_type=acf' ); // Advanced Custom Fields
+      remove_menu_page( 'edit.php?post_type=acf' ); // Advanced Custom Fields
     }
   }
 
@@ -213,19 +211,16 @@ class Config {
   }
 
   public function admin_theme_style() {
-    wp_enqueue_style('custom-admin', get_template_directory_uri().'/css/admin.css' );
+    wp_enqueue_style( 'custom-admin', get_template_directory_uri().'/css/admin.css' );
   }
-
-
 
   /*  ====================  */
   /*  = Global Functions =  */
   /*  ====================  */
 
   public function activate_maintenance() {
-    if ( !current_user_can('edit_themes') || !is_user_logged_in() ) {
-      wp_die('Site en maintenance.' );
+    if ( !current_user_can( 'edit_themes' ) || !is_user_logged_in() ) {
+      wp_die( 'Site en maintenance.' );
     }
   }
-
 }
