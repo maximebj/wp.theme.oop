@@ -7,7 +7,7 @@ const bs = require("browser-sync").create()
 
 gulp.task("browser-sync", function() {
   bs.init({
-    proxy: "xxx.local",
+    proxy: "capitainewp.local",
     ghostMode: false,
     open: false,
     notify: false
